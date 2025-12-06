@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniPSD: Layered PSD Generation with Diffusion Transformer</title>
+    <link rel="icon" href="misc/showlab.ico">
+
+    <style>
+        :root {
+            /* Colors */
+            --color-primary-text: #262626;
+            --color-body-text: #0D0D0D;
+            --color-secondary-text: #7F7F7F;
+            --color-footer-text: #F2F2F2;
+            --color-button-bg: #0D0D0D;
+            --color-button-text: #FFFFFF;
+            --color-code-bg: #D9D9D9;
+            --color-footer-bg: #404040;
+            --color-link-hover: #4A90E2;
+
+            /* Typography */
+            --font-title: 'SF-Pro-Display-Bold', Arial, sans-serif;
+            --font-subtitle: 'SF-Pro-Display-Regular', Arial, sans-serif;
+            --font-body: 'SF-Pro-Display-Light', Arial, sans-serif;
+            --font-body-highlight: 'SF-Pro-Display-Medium', Arial, sans-serif;
+            --font-button: 'SF-Pro-Rounded-Regular', Arial, sans-serif;
+            --font-code: 'SFMono-Regular', 'Courier New', monospace;
+
+            /* Spacing */
+            --spacing-small: 8px;
+            --spacing-medium: 16px;
+            --spacing-large: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --margin-safe: 50px;
+            --spacing-xxxl: 64px;
+            --spacing-xxxxl: 96px;
+            --spacing-xxxxxl: 120px;
+
+            /* Line heights */
+            --line-height-normal: 1.15;
+            --line-height-code-between: 1.15;
+        }
+
+        @font-face {
+            font-family: 'SF-Pro-Display-Bold';
+            src: url('fonts/SF-Pro-Display-Bold.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SF-Pro-Display-Medium';
+            src: url('fonts/SF-Pro-Display-Medium.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SF-Pro-Display-Light';
+            src: url('fonts/SF-Pro-Display-Light.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SF-Pro-Display-Regular';
+            src: url('fonts/SF-Pro-Display-Regular.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SF-Pro-Rounded-Regular';
+            src: url('fonts/SF-Pro-Rounded-Regular.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'SFMono-Regular';
+            src: url('fonts/SFMono-Regular.otf') format('opentype');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-left: var(--margin-safe);
+            padding-right: var(--margin-safe);
+
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-body-text);
+            line-height: var(--line-height-normal);
+            background-color: #FFFFFF;
+            letter-spacing: 0.02em;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-top: var(--spacing-large);
+            flex: 1 0 auto;
+        }
+
+        .header-group {
+            text-align: center;
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .main-title {
+            font-family: var(--font-title);
+            font-size: 32px;
+            color: var(--color-primary-text);
+            max-width: 960px;
+            margin: var(--spacing-xxxl) auto var(--spacing-medium) auto;
+            line-height: var(--line-height-normal);
+            letter-spacing: normal;
+        }
+
+        .subtitle1 {
+            font-family: var(--font-subtitle);
+            font-size: 16px;
+            color: var(--color-body-text);
+            max-width: 768px;
+            margin: var(--spacing-small) auto var(--spacing-small) auto;
+            line-height: var(--line-height-normal);
+            letter-spacing: 0.01em;
+        }
+
+        .subtitle2 {
+            font-family: var(--font-subtitle);
+            font-size: 14px;
+            color: var(--color-secondary-text);
+            max-width: 768px;
+            margin: var(--spacing-small) auto var(--spacing-large) auto;
+            line-height: var(--line-height-normal);
+            letter-spacing: 0.01em;
+        }
+
+        .button-group {
+            max-width: 768px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-medium);
+            letter-spacing: 0.04em;
+        }
+
+        .btn {
+            background-color: var(--color-button-bg);
+            color: var(--color-button-text);
+            font-family: var(--font-button);
+            font-size: 14px;
+            text-decoration: none;
+            padding: 4px 16px;
+            border-radius: 20px;
+            transition: opacity 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: normal;
+        }
+
+        .btn-icon {
+            height: 1em;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .content-group {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .content-title {
+            font-family: var(--font-title);
+            font-size: 20px;
+            color: var(--color-primary-text);
+            max-width: 540px;
+            margin: var(--spacing-xxxl) auto var(--spacing-large) auto;
+            line-height: var(--line-height-normal);
+            text-align: center;
+            letter-spacing: normal;
+        }
+
+        .body-text {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-body-text);
+            max-width: 768px;
+            margin: var(--spacing-small) auto var(--spacing-small) auto;
+            line-height: var(--line-height-normal);
+            text-align: left;
+        }
+
+        .body-text-highlight {
+            font-family: var(--font-body-highlight);
+            font-size: 18px;
+            color: var(--color-body-text);
+            max-width: 768px;
+            margin: var(--spacing-small) auto var(--spacing-small) auto;
+            line-height: var(--line-height-normal);
+            text-align: left;
+        }
+
+        .code-block {
+            background-color: var(--color-code-bg);
+            max-width: 768px;
+            margin: var(--spacing-large) auto var(--spacing-large) auto;
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .code-block code {
+            font-family: var(--font-code);
+            font-size: 12px;
+            color: var(--color-body-text);
+            line-height: var(--line-height-code-between);
+            white-space: pre-wrap;
+            word-break: break-all;
+            display: block;
+            letter-spacing: -0.02em;
+        }
+
+        .figure {
+            max-width: 960px;
+            width: 100%;
+            margin: var(--spacing-xxxl) auto var(--spacing-xxxl) auto;
+        }
+
+        .figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .figure-placeholder {
+            background-color: #555555;
+            color: #CCCCCC;
+            padding: var(--spacing-xxl);
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .figure video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .footer-group {
+            background-color: var(--color-footer-bg);
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-top: 0;
+            padding: 24px var(--margin-safe);
+            flex-shrink: 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: var(--spacing-medium) auto;
+        }
+
+        .footer-text {
+            font-family: var(--font-body);
+            font-size: 10px;
+            color: var(--color-footer-text);
+            line-height: var(--line-height-normal);
+            text-align: left;
+            margin-bottom: var(--spacing-medium);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--color-link-hover);
+        }
+
+        .btn a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --margin-safe: 16px;
+            }
+
+            .main-title {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --margin-safe: 12px;
+            }
+
+            .main-title {
+                font-size: 24px;
+            }
+
+            .subtitle1 {
+                font-size: 13px;
+            }
+        }
+
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin: var(--spacing-xxxl) auto var(--spacing-xxxl) auto;
+            gap: 1rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 150px;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-family: var(--font-title);
+            font-size: 3rem;
+            color: #333;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.3;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+    </style>
+
+    <!-- Font Awesome (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Academicons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header-group">
+            <h1 class="main-title">OmniPSD: Layered PSD Generation with Diffusion Transformer</h1>
+
+            <p class="subtitle1">
+                <a href="#">Cheng Liu</a>,
+                <a href="#">Yiren Song</a>,
+                <a href="#">Mike Zhengshou</a>,
+            </p>
+
+            <p class="subtitle2">
+                Show Lab, National University of Singapore
+            </p>
+        </div>
+        
+
+        
+
+        <!-- BibTeX -->
+        <div class="content-group">
+            <h2 class="content-title">BibTeX</h2>
+            <div class="code-block">
+                <code>@article{omnipsd2025,
+    title   = {OmniPSD: Layered PSD Generation with Diffusion Transformer},
+    author  = {Cheng Liu and Yiren Song and Mike Zhengshou},
+    journal = {CVPR},
+    year    = {2025},
+}</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-group">
+        <div class="footer-content">
+            <p class="footer-text">© 2025 OmniPSD authors.
+                &nbsp; Template inspired by <a href="https://nerfies.github.io/">Nerfies</a> and adapted from Mitty.
+            </p>
+            <p class="footer-text">
+                Licenced under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">CC BY-NC-SA 4.0</a>.
+                &nbsp; Fonts are excluded. &nbsp; If reusing this template, please keep this
+                <a href="https://macos-world.github.io">link</a> in the footer.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

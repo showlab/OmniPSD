@@ -368,19 +368,57 @@
         <div class="header-group">
             <h1 class="main-title">OmniPSD: Layered PSD Generation with Diffusion Transformer</h1>
 
-            <p class="subtitle1">
-                <a href="#">Cheng Liu</a>,
-                <a href="#">Yiren Song</a>,
-                <a href="#">Mike Zhengshou</a>,
+            <p class="subtitle1 author-list">
+                <span class="author">
+                    <a href="#">Cheng Liu</a><sup>1</sup>
+                </span>,
+                <span class="author">
+                    <a href="#">Yiren Song</a><sup>1</sup>
+                </span>,
+                <span class="author">
+                    <a href="#">Haofan Wang</a><sup>2</sup>
+                </span>,
+                <span class="author">
+                    <a href="#">Mike Zheng Shou</a><sup>1</sup>
+                </span>
             </p>
 
-            <p class="subtitle2">
-                Show Lab, National University of Singapore
+            <p class="subtitle2 affiliations">
+                <span><sup>1</sup> Show Lab, National University of Singapore</span> &nbsp; | &nbsp;
+                <span><sup>2</sup> <a href="#" target="_blank">Lovart AI</a></span>
             </p>
         </div>
-        
 
-        
+
+        <div class="figure">
+            <video autoplay loop muted playsinline controls>
+                <source src="media/demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <p class="body-text-highlight">
+            Given either a flattened poster image,
+            OmniPSD produces layered PSD files with transparent alpha channels,
+            separating text, foreground elements, and background into clean RGBA layers
+            that can be directly edited in tools.
+            An online interactive demo is available at
+            <a href="https://www.lovart.ai/" target="_blank">Lovart AI</a>.
+        </p>
+
+        <div class="figure">
+            <img src="media/method1.png" alt="OmniPSD method overview">
+            <br>
+            <br>
+            <img src="media/method2.png" alt="OmniPSD method overview">
+        </div>
+        <p class="body-text-highlight">
+            OmniPSD: a  unified Diffusion-Transformer with a shared RGBA-VAE supports
+            text-to-PSD layered generation and image-to-PSD decomposition, producing
+            fully editable PSD layers with transparent alpha channels.
+        </p>
+
+
 
         <!-- BibTeX -->
         <div class="content-group">

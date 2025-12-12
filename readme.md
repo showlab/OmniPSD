@@ -15,13 +15,16 @@ Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.e
 If you find OmniPSD useful, please cite:
 
 ```
-@article{OmniPSD,
-    title={OmniPSD: Layered PSD Generation with Diffusion Transformer}, 
-    author={Cheng Liu and Yiren Song and Mike Zheng Shou},
-    year={2025},
-    archivePrefix={arXiv},
-    primaryClass={cs.AI},
-    url={https://arxiv.org/abs/xxxx.xxxxx}, 
+@article{Liu2025OmniPSD,
+  title         = {OmniPSD: Layered PSD Generation with Diffusion Transformer},
+  author        = {Liu, Cheng and Song, Yiren and Wang, Haofan and Shou, Mike Zheng},
+  journal       = {arXiv preprint arXiv:2512.09247},
+  year          = {2025},
+  archivePrefix = {arXiv},
+  eprint        = {2512.09247},
+  primaryClass  = {cs.CV},
+  doi           = {10.48550/arXiv.2512.09247},
+  url           = {https://arxiv.org/abs/2512.09247}
 }
 ```
 

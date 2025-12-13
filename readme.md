@@ -1,14 +1,18 @@
 # OmniPSD
 
-**© 2025 Show Lab.** Inspired by [Nerfies](https://nerfies.github.io).
+> **OmniPSD: Layered PSD Generation with Diffusion Transformer**
+> <br>
+> [Yiren Song](https://scholar.google.com.hk/citations?user=L2YS0jgAAAAJ), 
+> [Cheng Liu](https://scholar.google.com.hk/citations?hl=zh-CN&user=TvdVuAYAAAAJ), 
+> [Haofan Wang](https://haofanwang.github.io/), 
+> and 
+> [Mike Zheng Shou](https://scholar.google.com/citations?user=S7bGBmkyNtEC)
+> <br>
+> [Show Lab](https://sites.google.com/view/showlab), National University of Singapore
+> [Lovart AI](https://www.lovart.ai/)
+> <br>
 
-Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">CC BY-NC-SA 4.0</a>. Fonts are excluded. If reusing this template, please keep the link <a href="https://macos-world.github.io">https://macos-world.github.io</a> in the webpage footer.
-
-<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en">
-    <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png" width="120">
-</a>
-
-<br/>
+<img src='./docs/media/teaser.png' width='100%' />
 
 ## Citation
 

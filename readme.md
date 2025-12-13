@@ -4,8 +4,7 @@
 
 **[Yiren Song](https://scholar.google.com.hk/citations?user=L2YS0jgAAAAJ)**<sup>1</sup>, **[Cheng Liu](https://scholar.google.com.hk/citations?hl=zh-CN&user=TvdVuAYAAAAJ)**<sup>1</sup>, **[Haofan Wang](https://haofanwang.github.io/)**<sup>2</sup>, **[Mike Zheng Shou](https://scholar.google.com/citations?user=S7bGBmkyNtEC)**<sup>1</sup>.
 
-<sup>1</sup>[Show Lab](https://sites.google.com/view/showlab), National University of Singapore.  
-<sup>2</sup>[Lovart AI](https://www.lovart.ai/).  
+<sup>1</sup>[Show Lab](https://sites.google.com/view/showlab), National University of Singapore <sup>2</sup>[Lovart AI](https://www.lovart.ai/)  
 
 
 <img src='./docs/media/teaser.png' width='100%' />
